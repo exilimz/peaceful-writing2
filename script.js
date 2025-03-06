@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
-    const splashScreen = document.getElementById('splash_screen');
-    const startWritingBtn = document.getElementById('start_writing');
     const main = document.getElementById('main');
     const wrapper = document.getElementById('wrapper');
     const logo = document.getElementById('logo');
@@ -51,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 
     // Event Listeners
-    startWritingBtn.addEventListener('click', hideSplashScreen);
     logo.addEventListener('click', toggleMenu);
     opback.addEventListener('click', toggleMenu);
     opnew.addEventListener('click', newDocument);
@@ -99,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedContent) {
             main.innerHTML = savedContent;
             updateWordCount();
-            hideSplashScreen();
         }
         
         // Load saved settings
@@ -107,6 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initially hide count div until mouse movement or typing
         countdiv.style.opacity = '0';
+        
+        // Set focus to the main editor
+        main.focus();
     }
 
     function loadSettings() {
@@ -131,11 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 option.classList.add('active');
             }
         });
-    }
-
-    function hideSplashScreen() {
-        splashScreen.style.display = 'none';
-        main.focus();
     }
 
     function toggleMenu() {
