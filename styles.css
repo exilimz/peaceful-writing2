@@ -110,11 +110,11 @@ body {
     max-width: 800px;
     min-height: 100%;
     outline: none;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.6;
     padding: 20px;
     color: #333;
-    font-family: 'Geist-Regular', sans-serif;
+    font-family: 'Geist-Light', sans-serif;
 }
 
 #main p {
@@ -298,20 +298,20 @@ body {
 
 .settings-option {
     margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .settings-option label {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
     font-size: 14px;
     color: #555;
 }
 
 .settings-icon {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
+    font-size: 18px;
     color: #777;
 }
 
@@ -324,15 +324,16 @@ body {
 
 .width-option {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     background: none;
     border: 1px solid #eee;
     border-radius: 4px;
     padding: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
-    width: calc(50% - 5px);
+    width: calc(25% - 8px);
+    height: 40px;
 }
 
 .width-option:hover {
@@ -347,29 +348,23 @@ body {
 .width-icon {
     height: 4px;
     background-color: #777;
-    margin-bottom: 8px;
     border-radius: 2px;
 }
 
 .width-icon-small {
-    width: 30px;
+    width: 20px;
 }
 
 .width-icon-medium {
-    width: 45px;
+    width: 30px;
 }
 
 .width-icon-large {
-    width: 60px;
+    width: 40px;
 }
 
 .width-icon-xlarge {
-    width: 75px;
-}
-
-.width-option span {
-    font-size: 12px;
-    color: #777;
+    width: 50px;
 }
 
 /* Toggle Switch */
@@ -378,6 +373,7 @@ body {
     display: inline-block;
     width: 50px;
     height: 24px;
+    cursor: pointer;
 }
 
 .toggle-switch input {
@@ -587,6 +583,10 @@ body.dark-mode .format-button:hover {
 
 body.dark-mode .format-divider {
     background-color: #333;
+}
+
+body.dark-mode #appName {
+    color: #fff;
 }
 
 @media (max-width: 768px) {

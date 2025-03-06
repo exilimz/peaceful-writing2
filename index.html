@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta name="description" content="Minimalist, distraction-free online text editor.">
 </head>
-<body spellcheck="true">
+<body spellcheck="false">
     <!-- Splash Screen -->
     <div id="splash_screen">
         <div id="splash_content">
@@ -25,7 +25,7 @@
 
     <!-- Main Content -->
     <div id="wrapper">
-        <div id="main" contenteditable="true"></div>
+        <div id="main" contenteditable="true" spellcheck="false"></div>
     </div>
 
     <!-- Logo -->
@@ -67,7 +67,6 @@
         <div class="settings-option">
             <label for="dark_mode_toggle">
                 <i class="fas fa-moon settings-icon"></i>
-                Dark Mode
             </label>
             <div class="toggle-switch">
                 <input type="checkbox" id="dark_mode_toggle">
@@ -77,24 +76,19 @@
         <div class="settings-option">
             <label>
                 <i class="fas fa-text-width settings-icon"></i>
-                Text Width
             </label>
             <div class="text-width-options">
                 <button class="width-option" data-width="500">
                     <div class="width-icon width-icon-small"></div>
-                    <span>500px</span>
                 </button>
                 <button class="width-option" data-width="700">
                     <div class="width-icon width-icon-medium"></div>
-                    <span>700px</span>
                 </button>
                 <button class="width-option" data-width="900">
                     <div class="width-icon width-icon-large"></div>
-                    <span>900px</span>
                 </button>
                 <button class="width-option" data-width="1100">
                     <div class="width-icon width-icon-xlarge"></div>
-                    <span>1100px</span>
                 </button>
             </div>
         </div>

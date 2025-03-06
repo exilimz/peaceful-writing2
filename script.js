@@ -62,11 +62,21 @@ document.addEventListener('DOMContentLoaded', function() {
     closeSettings.addEventListener('click', toggleSettings);
     main.addEventListener('input', handleInput);
     main.addEventListener('keydown', handleKeydown);
-    main.addEventListener('mouseup', handleTextSelection);
-    main.addEventListener('selectionchange', handleTextSelection);
     
     // Settings Event Listeners
     darkModeToggle.addEventListener('change', toggleDarkMode);
+    
+    // Make the toggle slider also trigger the checkbox
+    const toggleSlider = document.querySelector('.toggle-slider');
+    if (toggleSlider) {
+        toggleSlider.addEventListener('click', function(e) {
+            // Prevent default to avoid double triggering with the label
+            e.preventDefault();
+            darkModeToggle.checked = !darkModeToggle.checked;
+            toggleDarkMode();
+        });
+    }
+    
     widthOptions.forEach(option => {
         option.addEventListener('click', function() {
             const width = this.getAttribute('data-width');
@@ -74,19 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Format Bar Event Listeners
-    formatH1.addEventListener('click', () => formatText('h1'));
-    formatH2.addEventListener('click', () => formatText('h2'));
-    formatH3.addEventListener('click', () => formatText('h3'));
-    formatBold.addEventListener('click', () => formatText('bold'));
-    formatItalic.addEventListener('click', () => formatText('italic'));
-    
-    // Hide format bar when clicking outside
-    document.addEventListener('mousedown', function(e) {
-        if (!formatBar.contains(e.target) && e.target !== formatBar) {
-            formatBar.style.display = 'none';
-        }
-    });
+    // Hide format bar
+    if (formatBar) {
+        formatBar.style.display = 'none';
+    }
     
     // Show count div on mouse movement
     document.addEventListener('mousemove', showCountDiv);
@@ -114,6 +115,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (darkMode) {
             document.body.classList.add('dark-mode');
             darkModeToggle.checked = true;
+            
+            // Set dark mode logo
+            const logoImg = document.querySelector('#logo img');
+            logoImg.src = 'public/dark mode.png';
         }
         
         // Load text width setting
@@ -163,6 +168,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode', darkModeToggle.checked);
         localStorage.setItem('peacefulWriterDarkMode', darkModeToggle.checked);
+        
+        // Update logo based on dark mode
+        const logoImg = document.querySelector('#logo img');
+        if (darkModeToggle.checked) {
+            logoImg.src = 'public/dark mode.png';
+        } else {
+            logoImg.src = 'public/logo.png';
+        }
     }
 
     function setTextWidth(width) {
@@ -273,74 +286,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Tab') {
             e.preventDefault();
             document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
-        }
-    }
-
-    function handleTextSelection() {
-        clearTimeout(selectionTimeout);
-        
-        // Small delay to ensure selection is complete
-        selectionTimeout = setTimeout(() => {
-            const selection = window.getSelection();
-            
-            if (selection.toString().trim().length > 0) {
-                // Get selection coordinates
-                const range = selection.getRangeAt(0);
-                const rect = range.getBoundingClientRect();
-                
-                // Position the format bar above the selection
-                formatBar.style.top = (rect.top - formatBar.offsetHeight - 10) + 'px';
-                formatBar.style.left = (rect.left + (rect.width / 2) - (formatBar.offsetWidth / 2)) + 'px';
-                formatBar.style.display = 'block';
-            } else {
-                formatBar.style.display = 'none';
-            }
-        }, 100);
-    }
-
-    function formatText(format) {
-        const selection = window.getSelection();
-        
-        if (selection.toString().trim().length > 0) {
-            const range = selection.getRangeAt(0);
-            const selectedText = selection.toString();
-            
-            switch (format) {
-                case 'h1':
-                    wrapWithTag(range, 'h1');
-                    break;
-                case 'h2':
-                    wrapWithTag(range, 'h2');
-                    break;
-                case 'h3':
-                    wrapWithTag(range, 'h3');
-                    break;
-                case 'bold':
-                    document.execCommand('bold', false, null);
-                    break;
-                case 'italic':
-                    document.execCommand('italic', false, null);
-                    break;
-            }
-            
-            // Hide format bar after applying format
-            formatBar.style.display = 'none';
-            
-            // Save content after formatting
-            localStorage.setItem('peacefulWriterContent', main.innerHTML);
-        }
-    }
-
-    function wrapWithTag(range, tag) {
-        const content = range.extractContents();
-        const element = document.createElement(tag);
-        element.appendChild(content);
-        range.insertNode(element);
-        
-        // Ensure proper spacing after the element
-        if (!element.nextSibling || element.nextSibling.nodeName !== 'BR') {
-            const br = document.createElement('br');
-            element.parentNode.insertBefore(br, element.nextSibling);
         }
     }
 
