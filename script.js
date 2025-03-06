@@ -22,8 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsPanel = document.getElementById('settings_panel');
     const closeSettings = document.getElementById('close_settings');
     const darkModeToggle = document.getElementById('dark_mode_toggle');
-    const textWidthSlider = document.getElementById('text_width');
-    const widthValueSpan = document.getElementById('width_value');
+    const widthOptions = document.querySelectorAll('.width-option');
     
     // Format Bar Elements
     const formatBar = document.getElementById('format_bar');
@@ -68,7 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Settings Event Listeners
     darkModeToggle.addEventListener('change', toggleDarkMode);
-    textWidthSlider.addEventListener('input', adjustTextWidth);
+    widthOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const width = this.getAttribute('data-width');
+            setTextWidth(width);
+        });
+    });
     
     // Format Bar Event Listeners
     formatH1.addEventListener('click', () => formatText('h1'));
@@ -113,12 +117,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Load text width setting
-        const textWidth = localStorage.getItem('peacefulWriterTextWidth');
-        if (textWidth) {
-            main.style.maxWidth = textWidth + 'px';
-            textWidthSlider.value = textWidth;
-            widthValueSpan.textContent = textWidth + 'px';
-        }
+        const textWidth = localStorage.getItem('peacefulWriterTextWidth') || '700';
+        main.style.maxWidth = textWidth + 'px';
+        
+        // Mark the active width option
+        widthOptions.forEach(option => {
+            if (option.getAttribute('data-width') === textWidth) {
+                option.classList.add('active');
+            }
+        });
     }
 
     function hideSplashScreen() {
@@ -137,11 +144,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toggleSettings() {
         if (isMenuOpen) {
-            toggleMenu();
+            // Hide the menu first
+            options.classList.remove('visible');
         }
         
         isSettingsOpen = !isSettingsOpen;
         settingsPanel.classList.toggle('visible', isSettingsOpen);
+        
+        // If we're closing settings and the menu was open before, show it again
+        if (!isSettingsOpen && isMenuOpen) {
+            options.classList.add('visible');
+        } else if (isSettingsOpen) {
+            // If we're opening settings, ensure menu state is tracked correctly
+            isMenuOpen = false;
+        }
     }
 
     function toggleDarkMode() {
@@ -149,11 +165,14 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('peacefulWriterDarkMode', darkModeToggle.checked);
     }
 
-    function adjustTextWidth() {
-        const width = textWidthSlider.value;
+    function setTextWidth(width) {
         main.style.maxWidth = width + 'px';
-        widthValueSpan.textContent = width + 'px';
         localStorage.setItem('peacefulWriterTextWidth', width);
+        
+        // Update active class
+        widthOptions.forEach(option => {
+            option.classList.toggle('active', option.getAttribute('data-width') === width);
+        });
     }
 
     function newDocument() {

@@ -65,17 +65,37 @@
             <a id="close_settings"><i class="fas fa-times"></i></a>
         </div>
         <div class="settings-option">
-            <label for="dark_mode_toggle">Dark Mode</label>
+            <label for="dark_mode_toggle">
+                <i class="fas fa-moon settings-icon"></i>
+                Dark Mode
+            </label>
             <div class="toggle-switch">
                 <input type="checkbox" id="dark_mode_toggle">
                 <span class="toggle-slider"></span>
             </div>
         </div>
         <div class="settings-option">
-            <label for="text_width">Text Width</label>
-            <div class="range-container">
-                <input type="range" id="text_width" min="500" max="1200" step="50" value="800">
-                <span id="width_value">800px</span>
+            <label>
+                <i class="fas fa-text-width settings-icon"></i>
+                Text Width
+            </label>
+            <div class="text-width-options">
+                <button class="width-option" data-width="500">
+                    <div class="width-icon width-icon-small"></div>
+                    <span>500px</span>
+                </button>
+                <button class="width-option" data-width="700">
+                    <div class="width-icon width-icon-medium"></div>
+                    <span>700px</span>
+                </button>
+                <button class="width-option" data-width="900">
+                    <div class="width-icon width-icon-large"></div>
+                    <span>900px</span>
+                </button>
+                <button class="width-option" data-width="1100">
+                    <div class="width-icon width-icon-xlarge"></div>
+                    <span>1100px</span>
+                </button>
             </div>
         </div>
     </div>
