@@ -47,12 +47,37 @@
         <a class="option" id="opsave">
             <i class="fas fa-save menu-icon"></i>save
         </a>
+        <a class="option" id="opsettings">
+            <i class="fas fa-cog menu-icon"></i>settings
+        </a>
         <a class="option" id="opfull">
             <i class="fas fa-expand menu-icon"></i>full screen
         </a>
         <a class="option" id="opprint">
             <i class="fas fa-print menu-icon"></i>print
         </a>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settings_panel">
+        <div class="settings-header">
+            <h3>Settings</h3>
+            <a id="close_settings"><i class="fas fa-times"></i></a>
+        </div>
+        <div class="settings-option">
+            <label for="dark_mode_toggle">Dark Mode</label>
+            <div class="toggle-switch">
+                <input type="checkbox" id="dark_mode_toggle">
+                <span class="toggle-slider"></span>
+            </div>
+        </div>
+        <div class="settings-option">
+            <label for="text_width">Text Width</label>
+            <div class="range-container">
+                <input type="range" id="text_width" min="500" max="1200" step="50" value="800">
+                <span id="width_value">800px</span>
+            </div>
+        </div>
     </div>
 
     <!-- Word Count Display (Bottom Right) -->
@@ -64,6 +89,16 @@
 
     <!-- Save Message -->
     <div id="save_msg">Document saved!</div>
+
+    <!-- Text Formatting Bar -->
+    <div id="format_bar">
+        <button class="format-button" id="format_h1" title="Heading 1">H1</button>
+        <button class="format-button" id="format_h2" title="Heading 2">H2</button>
+        <button class="format-button" id="format_h3" title="Heading 3">H3</button>
+        <span class="format-divider"></span>
+        <button class="format-button" id="format_bold" title="Bold"><i class="fas fa-bold"></i></button>
+        <button class="format-button" id="format_italic" title="Italic"><i class="fas fa-italic"></i></button>
+    </div>
 
     <script src="script.js"></script>
 </body>

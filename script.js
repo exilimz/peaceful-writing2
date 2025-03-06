@@ -11,11 +11,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const opsave = document.getElementById('opsave');
     const opfull = document.getElementById('opfull');
     const opprint = document.getElementById('opprint');
+    const opsettings = document.getElementById('opsettings');
     const saveMsg = document.getElementById('save_msg');
     const countdiv = document.getElementById('countdiv');
     const wordCountSpan = document.getElementById('wordCount');
     const charCountSpan = document.getElementById('charCount');
     const readingTimeSpan = document.getElementById('readingTime');
+    
+    // Settings Elements
+    const settingsPanel = document.getElementById('settings_panel');
+    const closeSettings = document.getElementById('close_settings');
+    const darkModeToggle = document.getElementById('dark_mode_toggle');
+    const textWidthSlider = document.getElementById('text_width');
+    const widthValueSpan = document.getElementById('width_value');
+    
+    // Format Bar Elements
+    const formatBar = document.getElementById('format_bar');
+    const formatH1 = document.getElementById('format_h1');
+    const formatH2 = document.getElementById('format_h2');
+    const formatH3 = document.getElementById('format_h3');
+    const formatBold = document.getElementById('format_bold');
+    const formatItalic = document.getElementById('format_italic');
 
     // Constants
     const SAVE_DELAY = 2000; // 2 seconds delay for auto-save
@@ -24,13 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Variables
     let isMenuOpen = false;
+    let isSettingsOpen = false;
     let isFullScreen = false;
     let saveTimeout;
     let countTimeout;
     let countHideTimeout;
     let isCountVisible = false;
+    let selectionTimeout;
 
-    // Initialize: Load saved content if exists
+    // Initialize: Load saved content and settings if exists
     initializeApp();
 
     // Event Listeners
@@ -41,8 +59,30 @@ document.addEventListener('DOMContentLoaded', function() {
     opsave.addEventListener('click', saveDocument);
     opfull.addEventListener('click', toggleFullScreen);
     opprint.addEventListener('click', printDocument);
+    opsettings.addEventListener('click', toggleSettings);
+    closeSettings.addEventListener('click', toggleSettings);
     main.addEventListener('input', handleInput);
     main.addEventListener('keydown', handleKeydown);
+    main.addEventListener('mouseup', handleTextSelection);
+    main.addEventListener('selectionchange', handleTextSelection);
+    
+    // Settings Event Listeners
+    darkModeToggle.addEventListener('change', toggleDarkMode);
+    textWidthSlider.addEventListener('input', adjustTextWidth);
+    
+    // Format Bar Event Listeners
+    formatH1.addEventListener('click', () => formatText('h1'));
+    formatH2.addEventListener('click', () => formatText('h2'));
+    formatH3.addEventListener('click', () => formatText('h3'));
+    formatBold.addEventListener('click', () => formatText('bold'));
+    formatItalic.addEventListener('click', () => formatText('italic'));
+    
+    // Hide format bar when clicking outside
+    document.addEventListener('mousedown', function(e) {
+        if (!formatBar.contains(e.target) && e.target !== formatBar) {
+            formatBar.style.display = 'none';
+        }
+    });
     
     // Show count div on mouse movement
     document.addEventListener('mousemove', showCountDiv);
@@ -57,8 +97,28 @@ document.addEventListener('DOMContentLoaded', function() {
             hideSplashScreen();
         }
         
+        // Load saved settings
+        loadSettings();
+        
         // Initially hide count div until mouse movement or typing
         countdiv.style.opacity = '0';
+    }
+
+    function loadSettings() {
+        // Load dark mode setting
+        const darkMode = localStorage.getItem('peacefulWriterDarkMode') === 'true';
+        if (darkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+        
+        // Load text width setting
+        const textWidth = localStorage.getItem('peacefulWriterTextWidth');
+        if (textWidth) {
+            main.style.maxWidth = textWidth + 'px';
+            textWidthSlider.value = textWidth;
+            widthValueSpan.textContent = textWidth + 'px';
+        }
     }
 
     function hideSplashScreen() {
@@ -67,8 +127,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toggleMenu() {
+        if (isSettingsOpen) {
+            toggleSettings();
+        }
+        
         isMenuOpen = !isMenuOpen;
         options.classList.toggle('visible', isMenuOpen);
+    }
+
+    function toggleSettings() {
+        if (isMenuOpen) {
+            toggleMenu();
+        }
+        
+        isSettingsOpen = !isSettingsOpen;
+        settingsPanel.classList.toggle('visible', isSettingsOpen);
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode', darkModeToggle.checked);
+        localStorage.setItem('peacefulWriterDarkMode', darkModeToggle.checked);
+    }
+
+    function adjustTextWidth() {
+        const width = textWidthSlider.value;
+        main.style.maxWidth = width + 'px';
+        widthValueSpan.textContent = width + 'px';
+        localStorage.setItem('peacefulWriterTextWidth', width);
     }
 
     function newDocument() {
@@ -155,15 +240,88 @@ document.addEventListener('DOMContentLoaded', function() {
             saveDocument();
         }
         
-        // Escape to close menu
-        if (e.key === 'Escape' && isMenuOpen) {
-            closeMenu();
+        // Escape to close menu or settings
+        if (e.key === 'Escape') {
+            if (isMenuOpen) {
+                closeMenu();
+            }
+            if (isSettingsOpen) {
+                toggleSettings();
+            }
         }
         
         // Handle tab key
         if (e.key === 'Tab') {
             e.preventDefault();
             document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
+        }
+    }
+
+    function handleTextSelection() {
+        clearTimeout(selectionTimeout);
+        
+        // Small delay to ensure selection is complete
+        selectionTimeout = setTimeout(() => {
+            const selection = window.getSelection();
+            
+            if (selection.toString().trim().length > 0) {
+                // Get selection coordinates
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                // Position the format bar above the selection
+                formatBar.style.top = (rect.top - formatBar.offsetHeight - 10) + 'px';
+                formatBar.style.left = (rect.left + (rect.width / 2) - (formatBar.offsetWidth / 2)) + 'px';
+                formatBar.style.display = 'block';
+            } else {
+                formatBar.style.display = 'none';
+            }
+        }, 100);
+    }
+
+    function formatText(format) {
+        const selection = window.getSelection();
+        
+        if (selection.toString().trim().length > 0) {
+            const range = selection.getRangeAt(0);
+            const selectedText = selection.toString();
+            
+            switch (format) {
+                case 'h1':
+                    wrapWithTag(range, 'h1');
+                    break;
+                case 'h2':
+                    wrapWithTag(range, 'h2');
+                    break;
+                case 'h3':
+                    wrapWithTag(range, 'h3');
+                    break;
+                case 'bold':
+                    document.execCommand('bold', false, null);
+                    break;
+                case 'italic':
+                    document.execCommand('italic', false, null);
+                    break;
+            }
+            
+            // Hide format bar after applying format
+            formatBar.style.display = 'none';
+            
+            // Save content after formatting
+            localStorage.setItem('peacefulWriterContent', main.innerHTML);
+        }
+    }
+
+    function wrapWithTag(range, tag) {
+        const content = range.extractContents();
+        const element = document.createElement(tag);
+        element.appendChild(content);
+        range.insertNode(element);
+        
+        // Ensure proper spacing after the element
+        if (!element.nextSibling || element.nextSibling.nodeName !== 'BR') {
+            const br = document.createElement('br');
+            element.parentNode.insertBefore(br, element.nextSibling);
         }
     }
 
