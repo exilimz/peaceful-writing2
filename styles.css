@@ -1,0 +1,279 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('public/Geist-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('public/Geist-ExtraBold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('public/Geist-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Geist', sans-serif;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Splash Screen */
+#splash_screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#splash_content {
+    max-width: 500px;
+    padding: 20px;
+}
+
+#splash_block h1 {
+    margin-bottom: 20px;
+    color: #2abaff;
+    font-weight: 400;
+}
+
+#splash_block p {
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+#start_writing {
+    display: inline-block;
+    background-color: #2abaff;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+#start_writing:hover {
+    background-color: #1da0e0;
+}
+
+/* Main Writing Area */
+#wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+}
+
+#main {
+    width: 100%;
+    max-width: 800px;
+    min-height: 100%;
+    outline: none;
+    font-size: 18px;
+    line-height: 1.6;
+    padding: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+#main p {
+    margin-bottom: 1em;
+}
+
+/* Logo */
+#logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    opacity: 0.3;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    z-index: 10;
+}
+
+#logo:hover {
+    opacity: 1;
+}
+
+#logo span {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2abaff;
+}
+
+/* Options Menu */
+#options {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    transition: left 0.3s ease;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#options.visible {
+    left: 0;
+}
+
+.option {
+    display: block;
+    padding: 12px 0;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 800;
+    text-transform: lowercase;
+}
+
+.option:hover {
+    color: #2abaff;
+}
+
+.menu-icon {
+    margin-right: 15px;
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+.menumsg {
+    font-size: 16px;
+}
+
+#appName {
+    font-weight: 900;
+    text-transform: lowercase;
+    color: #000;
+}
+
+/* Counter - Updated for bottom right corner */
+#countdiv {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    text-align: right;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+#countdiv:hover {
+    opacity: 1 !important;
+}
+
+.countline {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: #777;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+}
+
+.countline:last-child {
+    margin-bottom: 0;
+}
+
+/* Save Message */
+#save_msg {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#save_msg.visible {
+    opacity: 1;
+}
+
+/* Dark Mode (activated via JS) */
+body.dark-mode {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+body.dark-mode #main {
+    color: #f0f0f0;
+}
+
+body.dark-mode #options {
+    background-color: #333;
+}
+
+body.dark-mode .option {
+    color: #f0f0f0;
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode #countdiv {
+    background-color: rgba(34, 34, 34, 0.7);
+}
+
+body.dark-mode .countline {
+    color: #aaa;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #main {
+        font-size: 16px;
+    }
+    
+    #options {
+        width: 280px;
+    }
+    
+    #countdiv {
+        padding: 6px 10px;
+    }
+    
+    .countline {
+        font-size: 11px;
+    }
+} 

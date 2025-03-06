@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peaceful Writer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="description" content="Minimalist, distraction-free online text editor.">
+</head>
+<body spellcheck="true">
+    <!-- Splash Screen -->
+    <div id="splash_screen">
+        <div id="splash_content">
+            <div id="splash_block">
+                <h1>Welcome to Peaceful Writer</h1>
+                <p>A minimalist text editor designed for distraction-free writing. Focus on your words, not the interface.</p>
+                <button id="start_writing">Start Writing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="wrapper">
+        <div id="main" contenteditable="true"></div>
+    </div>
+
+    <!-- Logo -->
+    <div id="logo">
+        <span>PW</span>
+    </div>
+
+    <!-- Options Menu -->
+    <div id="options">
+        <div class="menumsg">
+            <span id="appName">peaceful writer</span>
+        </div>
+        <a class="option" id="opback">
+            <i class="fas fa-arrow-left menu-icon"></i>back
+        </a>
+        <a class="option" id="opnew">
+            <i class="fas fa-file menu-icon"></i>new
+        </a>
+        <a class="option" id="opsave">
+            <i class="fas fa-save menu-icon"></i>save
+        </a>
+        <a class="option" id="opfull">
+            <i class="fas fa-expand menu-icon"></i>full screen
+        </a>
+        <a class="option" id="opprint">
+            <i class="fas fa-print menu-icon"></i>print
+        </a>
+    </div>
+
+    <!-- Word Count Display (Bottom Right) -->
+    <div id="countdiv">
+        <span class="countline" id="wordCount">0 words</span>
+        <span class="countline" id="charCount">0 characters</span>
+        <span class="countline" id="readingTime">less than 1 min read</span>
+    </div>
+
+    <!-- Save Message -->
+    <div id="save_msg">Document saved!</div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
