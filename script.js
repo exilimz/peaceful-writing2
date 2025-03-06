@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const wrapper = document.getElementById('wrapper');
     const logo = document.getElementById('logo');
     const options = document.getElementById('options');
-    const opback = document.getElementById('opback');
+    const menuCloseBtn = document.getElementById('menu_close_btn');
     const opnew = document.getElementById('opnew');
     const opsave = document.getElementById('opsave');
     const opfull = document.getElementById('opfull');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event Listeners
     logo.addEventListener('click', toggleMenu);
-    opback.addEventListener('click', toggleMenu);
+    menuCloseBtn.addEventListener('click', toggleMenu);
     opnew.addEventListener('click', newDocument);
     opsave.addEventListener('click', saveDocument);
     opfull.addEventListener('click', toggleFullScreen);

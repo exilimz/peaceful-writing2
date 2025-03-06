@@ -64,7 +64,7 @@ body {
     max-width: 800px;
     min-height: 100%;
     outline: none;
-    font-size: 19px;
+    font-size: 16px;
     line-height: 1.6;
     padding: 20px;
     color: #333;
@@ -119,7 +119,31 @@ body {
 .menumsg {
     font-size: 22px;
     margin-bottom: 30px;
-    display: block;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#menu_close_btn {
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    height: 22px;
+    line-height: 1;
+}
+
+#menu_close_btn i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu_close_btn:hover {
+    opacity: 1;
 }
 
 #appName {
@@ -447,7 +471,8 @@ body.dark-mode #main {
 }
 
 body.dark-mode #options {
-    background-color: #111;
+    background-color: #222;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .option {
@@ -541,6 +566,14 @@ body.dark-mode .format-divider {
 
 body.dark-mode #appName {
     color: #fff;
+}
+
+body.dark-mode .menumsg {
+    color: #ddd;
+}
+
+body.dark-mode #menu_close_btn {
+    color: #ddd;
 }
 
 @media (max-width: 768px) {
