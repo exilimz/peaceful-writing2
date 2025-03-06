@@ -6,6 +6,20 @@
 }
 
 @font-face {
+    font-family: 'Geist-Light';
+    src: url('public/Geist-Light.otf') format('opentype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Geist-Regular';
+    src: url('public/Geist-Regular.otf') format('opentype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
     font-family: 'Geist';
     src: url('public/Geist-Bold.otf') format('opentype');
     font-weight: bold;
@@ -27,8 +41,7 @@
 }
 
 body {
-    font-family: 'Geist', sans-serif;
-    font-weight: bold;
+    font-family: 'Geist-Regular', sans-serif;
     color: #333;
     background-color: #fff;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -101,7 +114,7 @@ body {
     line-height: 1.6;
     padding: 20px;
     color: #333;
-    font-weight: bold;
+    font-family: 'Geist-Regular', sans-serif;
 }
 
 #main p {
@@ -117,16 +130,17 @@ body {
     cursor: pointer;
     transition: opacity 0.3s;
     z-index: 10;
+    width: 40px;
+    height: 40px;
 }
 
 #logo:hover {
     opacity: 1;
 }
 
-#logo span {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2abaff;
+#logo img {
+    width: 100%;
+    height: 100%;
 }
 
 /* Options Menu */
@@ -140,7 +154,7 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 100;
     transition: left 0.3s ease;
-    padding: 20px;
+    padding: 30px 20px;
     overflow-y: auto;
 }
 
@@ -148,20 +162,34 @@ body {
     left: 0;
 }
 
+.menumsg {
+    font-size: 22px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+#appName {
+    font-family: 'Geist-Light', sans-serif;
+    font-weight: normal;
+    text-transform: lowercase;
+    color: #000;
+}
+
 .option {
     display: block;
-    padding: 12px 0;
+    padding: 16px 0;
+    margin-bottom: 8px;
     text-decoration: none;
     color: #333;
     cursor: pointer;
     transition: color 0.2s;
     border-bottom: 1px solid #f0f0f0;
-    font-weight: 800;
+    font-family: 'Geist-Light', sans-serif;
     text-transform: lowercase;
 }
 
 .option:hover {
-    color: #2abaff;
+    color: #777;
 }
 
 .menu-icon {
@@ -169,16 +197,6 @@ body {
     width: 20px;
     display: inline-block;
     text-align: center;
-}
-
-.menumsg {
-    font-size: 16px;
-}
-
-#appName {
-    font-weight: 900;
-    text-transform: lowercase;
-    color: #000;
 }
 
 /* Counter - Updated for bottom right corner */
@@ -207,7 +225,7 @@ body {
     margin-bottom: 2px;
     font-size: 12px;
     color: #777;
-    font-weight: bold;
+    font-family: 'Geist-Light', sans-serif;
     letter-spacing: 0.2px;
 }
 
@@ -251,29 +269,34 @@ body.dark-mode .option {
     border-bottom: 1px solid #444;
 }
 
+body.dark-mode .option:hover {
+    color: #aaa;
+}
+
 body.dark-mode #countdiv {
-    background-color: rgba(34, 34, 34, 0.7);
+    background-color: rgba(51, 51, 51, 0.7);
 }
 
 body.dark-mode .countline {
     color: #aaa;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     #main {
         font-size: 16px;
     }
     
     #options {
-        width: 280px;
+        width: 260px;
+        left: -260px;
     }
     
     #countdiv {
-        padding: 6px 10px;
+        bottom: 10px;
+        right: 10px;
     }
     
     .countline {
-        font-size: 11px;
+        font-size: 10px;
     }
 } 
